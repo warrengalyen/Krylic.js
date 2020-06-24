@@ -4,6 +4,7 @@ k.createCanvas(650, 350);
 
 let x = 0;
 
+animate();
 function animate() {
     k.clear();
 
@@ -69,5 +70,7 @@ function animate() {
     k.textSize(50);
     k.text('Canvas', CANVAS_WIDTH/2, CANVAS_HEIGHT/2);
     x++;
+
+
     k.loop(animate)
 }

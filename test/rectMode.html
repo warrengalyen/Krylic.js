@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Candy.js</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- <canvas id="k"></canvas> -->
+
+<script src="../lib/Krylic.js"></script>
+
+<script>
+    const k = new Krylic();
+    k.createCanvas(600, 400);
+
+    let x = 100;
+    let y = 100;
+    function animate() {
+        k.clear(0);
+
+        k.rectMode(CENTER);
+        k.stroke(255);
+        k.rect(x, y, 100, 100, 50, 0, 0, 10);
+        k.circle(x, y, 5);
+
+        k.loop(animate);
+    }
+
+    animate();
+</script>
+</body>
+
+</html>

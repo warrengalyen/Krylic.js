@@ -24,10 +24,10 @@
     k.createCanvas(800, 600);
     k.resize(true);
 
-    let img = k.loadImage('../src/big_image.jpg');
+    let img = k.loadImage('./src/big_image.jpg');
 
     let json = null;
-    k.loadJSON('../src/drawData.json', function (err, data) {
+    k.loadJSON('./src/drawData.json', function (err, data) {
         json = JSON.parse(data);
     });
 
@@ -35,11 +35,17 @@
         animate();
     }
 
+    let from = 0;
+    let target = 300;
     function animate() {
         k.clear();
 
-        k.drawJSON(json)
-        k.image(img, 100, 100, 300, 200);
+        if (mouseDown) {
+            k.drawJSON(json);
+        }
+
+        from = tween(from, target, 20);
+        k.image(img, from, 100, 300, 200);
 
         k.loop(animate);
     }
