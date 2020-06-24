@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Renderer.js</title>
+    <style>
+        * {
+            margin: 0;
+        }
+
+        canvas {
+            position: relative;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+
+<script src=".././lib/Krylic.js"></script>
+
+<script>
+    // init Krylic
+    const k = new Krylic();
+    k.createCanvas(800, 600);
+
+    let jsonData = {};
+    fetch('./drawData.json')
+        .then(res => res.text())
+        .then(data => {
+            jsonData = JSON.parse(data);
+        })
+
+
+    function animate() {
+        k.clear();
+
+        k.drawJSON(jsonData)
+
+        k.loop(animate);
+    }
+</script>
+</body>
+
+</html>

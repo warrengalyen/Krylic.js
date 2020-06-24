@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Renderer.js</title>
+    <style>
+        * {
+            margin: 0;
+        }
+        canvas {
+            position: relative;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+
+<script src=".././lib/Krylic.js"></script>
+
+<script>
+    // init Krylic
+    const k = new Krylic();
+    k.createCanvas(800, 600);
+
+    k.createScreenBuffer('os');
+
+    let r = randomRGB();
+    function animate() {
+        k.clear();
+
+        k.screenBuffers.os.clear(rgb(255,255,255,0.05));
+        k.screenBuffers.os.fill(['deepskyblue', 'crimson', 'purple']);
+        k.screenBuffers.os.noStroke();
+        k.screenBuffers.os.rect(mouseX-50, mouseY-50, 100, 100, 50);
+
+        k.putScreenBuffer(k.screenBuffers.os);
+
+        k.noFill();
+        k.rect(mouseX - 50, mouseY - 50, 100, 100, 50);
+
+        k.strokeWeight(2.0);
+        k.textSize(100);
+        k.textFont('Impact');
+        k.textAlign(CENTER);
+        k.textBaseline(MIDDLE);
+        k.text('Krylic.js', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
+
+        k.loop(animate);
+    }
+</script>
+</body>
+
+</html>
