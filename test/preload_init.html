@@ -2,14 +2,14 @@
 <html lang="en">
 
 <head>
-    <title>Renderer.js</title>
+    <title>Krylic.js</title>
     <style>
         * {
             margin: 0;
         }
 
         canvas {
-            position: relative;
+            position: absolute;
             border: 1px solid black;
         }
     </style>
@@ -20,34 +20,25 @@
 <script src=".././lib/Krylic.js"></script>
 
 <script>
-    const k = new Krylic();
-    k.createCanvas(800, 600);
-    k.resize(true);
+    const c = new Krylic();
+    c.createCanvas(800, 600);
+    c.resize(true);
 
-    let img = k.loadImage('./src/big_image.jpg');
-
-    let json = null;
-    k.loadJSON('./src/drawData.json', function (err, data) {
-        json = JSON.parse(data);
-    });
+    let img = c.loadImage('/Krylic.js/test/src/big_image.jpg');
 
     function preload() {
-        animate();
+        console.log('this is preload')
     }
+    // c.noLoop();
+    // c.loop();
 
-    let from = 0;
-    let target = 300;
-    function animate() {
-        k.clear();
+    function mygame() {
+        c.clear();
 
-        if (mouseDown) {
-            k.drawJSON(json);
-        }
+        c.rect(mouseX, mouseY, 300, 200)
+        c.image(img, mouseX, mouseY, 300, 200);
 
-        from = tween(from, target, 20);
-        k.image(img, from, 100, 300, 200);
-
-        k.loop(animate);
+        c.loop(mygame);
     }
 </script>
 </body>
