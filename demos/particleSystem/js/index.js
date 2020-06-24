@@ -11,7 +11,7 @@ let ps = new ParticleSystem(CANVAS_WIDTH / 2, 400, img);
 
 
 function animate() {
-    k.clear('#151515');
+    k.clear('#151515');``
 
     ps.setOrigin(mouseX, mouseY)
 
