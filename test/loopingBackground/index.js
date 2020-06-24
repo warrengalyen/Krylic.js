@@ -1,10 +1,10 @@
-const c = new Candy();
-c.createCanvas(650, 350);
-let ctx = c.ctx;
+const k = new Krylic();
+k.createCanvas(650, 350);
+let ctx = k.ctx;
 
 
-let bg_image = c.loadImage('../src/bg_trees.png');
-let bg_image_long = c.loadImage('../src/bg_trees_long.png');
+let bg_image = k.loadImage('../src/bg_trees.png');
+let bg_image_long = k.loadImage('../src/bg_trees_long.png');
 
 let width = 0;
 let height = 0;
@@ -19,22 +19,22 @@ function preload() {
 // let x = 650;
 
 function animate() {
-    c.clear();
+    k.clear();
 
     x += 5;
     console.log(x, width)
     if(x > width) {
         x = width/2
     }
-    c.image(bg_image_long, x - width, -150, width, height)
+    k.image(bg_image_long, x - width, -150, width, height)
 
     // x += 5;
     // if(x > width*2) {
     //   x = width
     // }
-    // c.image(bg_image, x - 0, 50, width, height)
-    // c.image(bg_image, x - width, 50, width, height)
-    // c.image(bg_image, x - width*2, 50, width, height)
+    // k.image(bg_image, x - 0, 50, width, height)
+    // k.image(bg_image, x - width, 50, width, height)
+    // k.image(bg_image, x - width*2, 50, width, height)
 
-    c.loop(animate)
+    k.loop(animate)
 }

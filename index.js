@@ -1,76 +1,41 @@
-// INIT KRYLIC
+let n = 1;
+let t = 8;
+let rotationAngle = 135;
+
 const k = new Krylic();
-k.createCanvas(650, 350);
+k.createCanvas(WINDOW_WIDTH, WINDOW_HEIGHT);
+k.clear(25);
 
-let x = 0;
 
-animate();
+k.blendMode(ADD);
+k.shadow(0, 0, 20, rgba(255,255,255,0.8));
+k.noStroke();
+k.fill(255);
+k.textFont('Century Gothic');
+k.textSize(100);
+k.textAlign(CENTER);
+k.textBaseline(MIDDLE);
+k.text('Krylic.js', CANVAS_WIDTH/2, -20+CANVAS_HEIGHT/2);
+k.textSize(25);
+k.text('Canvas Rendering Engine', CANVAS_WIDTH/2, 50+CANVAS_HEIGHT/2);
+
 function animate() {
-    k.clear();
 
-    k.blendMode(SCREEN);
+    k.noShadow();
+    let a = n * rotationAngle;
+    let r = t * Math.sqrt(n);
 
-    k.smooth('high');
-    k.fill(55, 255, 155, 0.5);
-    k.circle(100 * Math.sin(x * 0.1) + 200, 150, 50);
-    k.stroke('deepskyblue').strokeWeight(5);
+    let x = r * Math.cos(a) + CANVAS_WIDTH / 2;
+    let y = r * Math.sin(a) + CANVAS_HEIGHT / 2;
 
-    k.circle(mouseX, mouseY, 50);
-
-    k.ctx.lineCap = 'round';
-    k.ctx.lineJoin = 'miter';
-    k.stroke('blue').strokeWeight(5);
-    k.line(0, 0, 150, 150);
-
+    k.fill( hsla( a - r, 80, 50, 0.3) );
     k.noStroke();
+    k.circle(x, y, 5);
 
-    let mapped = map(mouseX, 0, 650, 0, 100);
+    n++
+    k.loop(animate);
+}
 
-    // x, y, r1, r2
-    let radgrad = k.radialGradient(150 + 50, 75, 75, 0,
-        ['crimson-0.9', 'purple', 'deepskyblue']
-    );
-    k.fill(radgrad);
-    k.rect(150, 20, 100, 100);
-
-    let grad = k.linearGradient(mapped, mapped, 350, 0,
-        ['crimson', 'purple', 'deepskyblue']
-    );
-    k.fill(grad)
-    k.stroke(grad)
-    k.strokeWeight(2);
-
-    k.textFont('Arial');
-    k.textSize(50);
-    k.text('Hello World', 150, 200);
-
-    k.textFont('Impact');
-    k.textSize(50);
-    k.text('Canvas', 150, 250);
-
-    k.push();
-    k.noStroke();
-    k.fill('tomato')
-    k.transRot(200, 200, x / 50);
-    k.rect(-50, -50, 100, 100, 10);
-    k.pop();
-
-    k.fill('yellowgreen');
-    k.noStroke();
-    k.triangle(300, 100, 100, 60);
-
-    k.noStroke();
-    k.fill('red')
-    k.circle(CANVAS_WIDTH/2, CANVAS_HEIGHT/2,5)
-
-    k.fill('rgba(0,0,0,0.5)')
-    k.textFont('Impact');
-    k.ctx.textAlign = 'center'
-    k.ctx.textBaseline = 'middle'
-    k.textSize(50);
-    k.text('Canvas', CANVAS_WIDTH/2, CANVAS_HEIGHT/2);
-    x++;
-
-
-    k.loop(animate)
+for (let i = 0; i < 15; i++) {
+    animate();
 }
