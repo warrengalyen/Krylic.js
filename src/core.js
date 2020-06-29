@@ -78,6 +78,14 @@ Krylic.prototype.resize = function (cull) {
 }
 
 /**
+ * @method Krylic.fullScreen()
+ */
+Krylic.prototype.fullScreen = function () {
+    this.canvas.width = WINDOW_WIDTH - 2;
+    this.canvas.height = WINDOW_HEIGHT - 2;
+}
+
+/**
  * @method Krylic.createCanvas()
  * @param {Number} w
  * @param {Number} h
