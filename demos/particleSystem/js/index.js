@@ -1,7 +1,7 @@
 let k = new Krylic();
 k.createCanvas(WINDOW_WIDTH, WINDOW_HEIGHT);
 
-let img = k.loadImage('./texture/emitter1.png')
+let img = c.loadImage('https://warrengalyen.github.io/Krylic.js/demos/particleSystem/texture/emitter1.png')
 
 function preload() {
     animate();

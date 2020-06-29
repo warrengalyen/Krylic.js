@@ -1,3 +1,5 @@
+const Krylic = require('./core');
+
 /**
  * @method Krylic.noFill()
  */
@@ -472,3 +474,5 @@ Krylic.prototype.noSmooth = function () {
         this.ctx.imageSmoothingEnabled = false;
     }
 }
+
+module.exports = Krylic;

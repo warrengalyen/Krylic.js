@@ -1,5 +1,7 @@
-require('./core');
+const Krylic = require('./core');
 require('./renderer');
 require('./io');
 require('./utils');
-require('./globals'); 
+require('./globals');
+
+module.exports = Krylic;

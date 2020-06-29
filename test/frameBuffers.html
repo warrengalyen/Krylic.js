@@ -23,7 +23,7 @@
     const k = new Krylic();
     k.createCanvas(800, 600);
 
-    k.createScreenBuffer('os');
+    let osc = k.createScreenBuffer('os');
 
     let r = randomRGB();
 
@@ -31,12 +31,12 @@
     function animate() {
         k.clear();
 
-        k.screenBuffers.os.clear(rgb(255,255,255,0.05));
-        k.screenBuffers.os.fill(['deepskyblue', 'crimson', 'purple']);
-        k.screenBuffers.os.noStroke();
-        k.screenBuffers.os.rect(mouseX-50, mouseY-50, 100, 100, 50);
+        osc.clear(rgb(255,255,255,0.05));
+        osc.fill(['deepskyblue', 'crimson', 'purple']);
+        osc.noStroke();
+        osc.rect(mouseX-50, mouseY-50, 100, 100, 50);
 
-        k.putScreenBuffer(k.screenBuffers.os);
+        k.putScreenBuffer(osc);
 
         k.noFill();
         k.rect(mouseX - 50, mouseY - 50, 100, 100, 50);

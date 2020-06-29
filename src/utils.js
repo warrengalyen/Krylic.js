@@ -1,3 +1,4 @@
+const Krylic = require('./core');
 
 /**
  * @method Krylic._parseColor()
@@ -32,3 +33,5 @@ Krylic.prototype.keyIsPressed = function (key) {
     }
     return false;
 }
+
+module.exports = Krylic;

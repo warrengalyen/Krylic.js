@@ -49,9 +49,9 @@ function Krylic(canvas, width, height) {
 }
 
 /**
- * FUNCTIONAL PROTOTYPES /////////////////
+ * @method Krylic.trypreload();
+ * preloads all the resources
  */
-
 Krylic.prototype.trypreload = function() {
     if (window.preload || this.preload) {
         var timer = window.setInterval(function () {
@@ -81,6 +81,7 @@ Krylic.prototype.resize = function (cull) {
  * @method Krylic.createCanvas()
  * @param {Number} w
  * @param {Number} h
+ * creates a new Canvas Element with defined Width and Height
  */
 Krylic.prototype.createCanvas = function (w, h) {
     this.canvas = document.createElement('canvas');
@@ -99,24 +100,33 @@ Krylic.prototype.createCanvas = function (w, h) {
 /**
  * @method Krylic.createScreenBuffer()
  * @param {String} name
+ * @param {Number} width
+ * @param {Number} height
+ * creates a new screenBuffer Element with defined Width and Height
  */
-Krylic.prototype.createScreenBuffer = function (name) {
+Krylic.prototype.createScreenBuffer = function (name, width, height) {
     let canvas = document.createElement('canvas');
     canvas.id = 'KrylicCanvasOffscreen-' + this.idIndex;
-    canvas.width = this.canvas.width;
-    canvas.height = this.canvas.height;
+    canvas.width = width || this.canvas.width;
+    canvas.height = height || this.canvas.height;
     // this.resizeCanvas(canvas);
     this.screenBuffers[name] = new Krylic(canvas, canvas.width, canvas.height);
+    return this.screenBuffers[name];
 }
 
 /**
  * @method Krylic.putScreenBuffer()
  * @param {imageData} data
+ * puts the screenBuffer data into main canvas
  */
 Krylic.prototype.putScreenBuffer = function (data) {
     this.ctx.drawImage(data.canvas, 0, 0);
 }
 
+/**
+ * @method Krylic._initCanvas();
+ * fires window.animate callback when startup
+ */
 Krylic.prototype._initCanvas = function () {
     window.addEventListener('DOMContentLoaded', function () {
         if (window.animate && this.fireCallback) {
@@ -125,6 +135,10 @@ Krylic.prototype._initCanvas = function () {
     }.bind(this));
 }
 
+/**
+ * @method Krylic.noLoop();
+ * stops animation loop
+ */
 Krylic.prototype.noLoop = function () {
     this.animateLoop = false;
 }
@@ -132,6 +146,7 @@ Krylic.prototype.noLoop = function () {
 /**
  * @method Krylic.loop()
  * @param {Function} func
+ * starts animation loop
  */
 Krylic.prototype.loop = function (func) {
     if (this.animateLoop) {
@@ -150,6 +165,7 @@ Krylic.prototype.loop = function (func) {
  * @method Krylic.resizeCanvas()
  * @param {Element} canvas
  * @param {Boolean} cull
+ * resizes the canvas with 16:9 aspect ratio
  */
 Krylic.prototype.resizeCanvas = function (canvas, cull) {
     let targetHeight = window.innerWidth * 9 / 16;
@@ -177,6 +193,4 @@ Krylic.prototype.resizeCanvas = function (canvas, cull) {
     }
 }
 
-
-global.Krylic = Krylic;
 module.exports = Krylic;

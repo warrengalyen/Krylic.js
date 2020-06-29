@@ -1,6 +1,9 @@
+const Krylic = require('./core');
+
 /**
  * @method Krylic.loadImage()
  * @param {String} url
+ * @return HTMLImageElement
  */
 Krylic.prototype.loadImage = function (url) {
     this.resCount++;
@@ -13,6 +16,8 @@ Krylic.prototype.loadImage = function (url) {
 /**
  * @method Krylic.loadJSON()
  * @param {String} url
+ * @param {Function} callback
+ * loads a JSON file
  */
 Krylic.prototype.loadJSON = function (url, callback) {
     this.resCount++;
@@ -34,6 +39,7 @@ Krylic.prototype.loadJSON = function (url, callback) {
 /**
  * @method Krylic.drawJSON()
  * @param {JSON} json
+ * draws a JSON file
  */
 Krylic.prototype.drawJSON = function (json) {
     for (const i in json) {
@@ -57,3 +63,5 @@ Krylic.prototype.drawJSON = function (json) {
         }
     }
 }
+
+module.exports = Krylic;
