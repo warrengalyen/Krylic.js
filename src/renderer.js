@@ -344,22 +344,27 @@ Krylic.prototype.image = function (img, sx, sy, sw, sh, dx, dy, dw, dh) {
 /**
  * @method Krylic.textAlign()
  * @param {String} value
+ * @chainable
  */
 Krylic.prototype.textAlign = function (value) {
     this.ctx.textAlign = value;
+    return this;
 }
 
 /**
  * @method Krylic.textBaseline()
  * @param {String} value
+ * @chainable
  */
 Krylic.prototype.textBaseline = function (value) {
     this.ctx.textBaseline = value;
+    return this;
 }
 
 /**
  * @method Krylic.textFont()
  * @param {String} value
+ * @chainable
  */
 Krylic.prototype.textFont = function (font) {
     this.font[1] = font;
@@ -369,6 +374,7 @@ Krylic.prototype.textFont = function (font) {
 /**
  * @method Krylic.textSize()
  * @param {Number} value
+ * @chainable
  */
 Krylic.prototype.textSize = function (size) {
     this.font[0] = size + 'px';
@@ -412,6 +418,7 @@ Krylic.prototype.alpha = function (value) {
  * @method Krylic.translate()
  * @param {Number} x
  * @param {Number} y
+ * @chainable
  */
 Krylic.prototype.translate = function (x, y) {
     if (y === undefined) { y = x }
@@ -422,9 +429,23 @@ Krylic.prototype.translate = function (x, y) {
 /**
  * @method Krylic.rotate()
  * @param {Number} deg
+ * @chainable
  */
 Krylic.prototype.rotate = function (deg) {
     this.ctx.rotate(deg);
+    return this;
+}
+
+/**
+ * @method Krylic.scale()
+ * @param {Number} x
+ * @param {Number} y
+ * @chainable
+ */
+Krylic.prototype.scale = function (x, y) {
+    if (x === undefined) x = 1.0;
+    if (y === undefined) y = x;
+    this.ctx.scale(x, y);
     return this;
 }
 
@@ -433,6 +454,7 @@ Krylic.prototype.rotate = function (deg) {
  * @param {Number} x
  * @param {Number} y
  * @param {Number} deg
+ * @chainable
  */
 Krylic.prototype.transRot = function (x, y, deg) {
     this.ctx.translate(x, y);
@@ -472,6 +494,90 @@ Krylic.prototype.noSmooth = function () {
     if ('imageSmoothingEnabled' in this.ctx) {
         this.ctx.imageSmoothingEnabled = false;
     }
+}
+
+/**
+ * @method Krylic.loadPixels()
+ * @param {Number?} x
+ * @param {Number?} y
+ * @param {Number?} width
+ * @param {Number?} height
+ * @return {Object}
+ */
+Krylic.prototype.loadPixels = function(x, y, width, height) {
+    let imagedata;
+    if (x === undefined) x = 0;
+    if (y === undefined) y = 0;
+    if (width === undefined) width = CANVAS_WIDTH;
+    if (height === undefined) height = CANVAS_HEIGHT;
+    if (x instanceof CanvasRenderingContext2D) {
+        imagedata = x.getImageData(0, 0, width, height);
+        return {imageData : imagedata, pixels : imagedata.data};
+    }
+    imagedata = this.ctx.getImageData(x, y, width, height);
+
+    this.imageData = imagedata;
+    this.pixels = imagedata.data;
+
+    return {imageData : imagedata, pixels : imagedata.data};
+}
+
+
+/**
+ * @method Krylic.updatePixels()
+ * @param {CanvasRenderingContext2D?} ctx
+ * @param {ImageData?} imagedata
+ * @param {Number?} x
+ * @param {Number?} y
+ * @param {Number?} dx
+ * @param {Number?} dy
+ * @param {Number?} dw
+ * @param {Number?} dh
+ */
+Krylic.prototype.updatePixels = function(ctx, imagedata, x, y, dx, dy, dw, dh) {
+    if (x === undefined) x = 0;
+    if (y === undefined) y = 0;
+    if (dx === undefined) dx = 0;
+    if (dy === undefined) dy = 0;
+    if (dw === undefined) dw = this.canvas.width;
+    if (dh === undefined) dh = this.canvas.height;
+    if (ctx instanceof CanvasRenderingContext2D && imagedata !== undefined) {
+        ctx.putImageData(imagedata, x, y, w, h, 0, 0);
+    } else {
+        this.ctx.putImageData(this.imageData, x, y, dx, dy, dw, dh);
+    }
+}
+
+/**
+ * @method Krylic.setPixelColor()
+ * @param {Number} x
+ * @param {Number} y
+ * @param {Array} rgba
+ * calculates the xy indices
+ */
+Krylic.prototype.setPixelXYColor = function(x, y, rgba, pxl) {
+    let index = (x+y*this.canvas.width)*4;
+    this.setPixelArrayColor(index, rgba, pxl);
+}
+/**
+ * @method Krylic.setPixelArrayColor()
+ * @param {Number} index
+ * @param {Array} rgba
+ * just takes the calculated xy position
+ */
+Krylic.prototype.setPixelArrayColor = function(index, rgba, pixels) {
+    let pxl;
+    if (pixels !== undefined) {
+        pxl = pixels;
+    } else {
+        pxl = this.pixels;
+    }
+    if (pxl.length < 1) throw new Error('loadPixels() is not called')
+    pxl[index] = rgba[0];
+    pxl[index + 1] = rgba[1];
+    pxl[index + 2] = rgba[2];
+    pxl[index + 3] = rgba[3] || 255;
+    return pxl;
 }
 
 module.exports = Krylic;
