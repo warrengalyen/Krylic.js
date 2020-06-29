@@ -5,12 +5,13 @@
     <title>Krylic.js</title>
     <style>
         * {
-            margin: 0;
+            /* margin: 0; */
+            /* padding: 0; */
         }
 
         canvas {
             position: absolute;
-            border: 1px solid black;
+            /*border: 1px solid black;*/
         }
     </style>
 </head>
@@ -19,12 +20,13 @@
 
 <script src="../dist/Krylic.build.js"></script>
 
+<canvas id="c"></canvas>
 <script>
-    const c = new Krylic();
-    c.createCanvas(800, 600);
-    c.fullScreen();
+    const k = new Krylic("#c", WINDOW_WIDTH, WINDOW_HEIGHT);
+    // k.createCanvas(800, 600);
+    // k.fullScreen();
 
-    let img = c.loadImage('./src/big_image.jpg');
+    let img = k.loadImage('./src/big_image.jpg');
 
     function preload() {
         console.log('this is preload')
@@ -32,12 +34,13 @@
     }
 
     function mygame() {
-        c.clear();
+        k.clear();
 
-        c.rect(mouseX, mouseY, 300, 200)
-        c.image(img, mouseX, mouseY, 300, 200);
+        console.log(CANVAS_WIDTH)
+        k.rect(mouseX, mouseY, 300, 200)
+        k.image(img, mouseX, mouseY, 300, 200);
 
-        c.loop(mygame);
+        k.loop(mygame);
     }
 </script>
 </body>

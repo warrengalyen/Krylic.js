@@ -82,8 +82,14 @@ Krylic.prototype.resize = function (cull) {
  */
 Krylic.prototype.fullScreen = function (offset) {
     offset = (offset === undefined) ? 4 : offset;
-    this.canvas.width = WINDOW_WIDTH - offset;
-    this.canvas.height = WINDOW_HEIGHT - offset;
+    let w = WINDOW_WIDTH - offset;
+    let h = WINDOW_HEIGHT - offset;
+    this.canvas.width = w;
+    this.canvas.height = h;
+    this.width = w;
+    this.height = h;
+    CANVAS_WIDTH = w;
+    CANVAS_HEIGHT = h;
 }
 
 /**
